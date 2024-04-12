@@ -13,7 +13,7 @@ export const Card = ({ data }: Props) => {
   const image = "https://image.tmdb.org/t/p/w500";
 
   // let value : string
-  const [value,setValue] = useState<Array<Movie>>([])
+  // const [value,setValue] = useState<Array<Movie>>([])
   const [color, setColor] = useState(true);
 
   // const deleteFav = () =>{
@@ -39,11 +39,11 @@ export const Card = ({ data }: Props) => {
       console.log(newFav);
       localStorage.setItem("fav", JSON.stringify(newFav));
     } else {
-      const getItem = localStorage.getItem("fav");
-      const parsed = JSON.parse(getItem)
-      console.log(setValue(parsed))
+      // const getItem = localStorage.getItem("fav");
+      // const parsed = JSON.parse(getItem)
+      // console.log(setValue(parsed))
       
-      // localStorage.removeItem("fav");
+      localStorage.removeItem("fav");
     }
   };
 
