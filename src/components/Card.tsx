@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { Movie } from "../interfaces";
 import { Link } from "react-router-dom";
 import HeartFilled from "./icons/heart-filled";
@@ -9,7 +9,7 @@ interface Props {
 
 export const Card = ({ data }: Props) => {
   const image = "https://image.tmdb.org/t/p/w500";
-  const item = false
+  const [itemValue,setItemValue] = useState(false)
   const { setItem, getItem, removeItem, validate } = useLocalStorage("fav");
   
 
@@ -43,15 +43,15 @@ export const Card = ({ data }: Props) => {
       </Link>
       <div>
         {
-          !item ? (<button onClick={() => {handleClick(data), getItem("fav")}}>
+          !itemValue ? (<button onClick={() => {handleClick(data), getItem("fav"), setItemValue(true)}}>
           <HeartFilled color={true} />
-        </button>) : (<button onClick={() => {handleClick(data), removeItem()}}>
+        </button>) : (<button onClick={() => {handleClick(data), removeItem(), setItemValue(false)}}>
           <HeartFilled color={false} />
         </button>)
         }
         
+        <Link to="/list" state={{ data: data }} ><div>o</div></Link>
       </div>
-      <div></div>
     </div>
   );
 };
