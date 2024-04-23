@@ -1,10 +1,9 @@
 
-const List = () => {
+function List() {
  
-  const data = localStorage.getItem("fav");
-  parsed = JSON.parse(data);
+  
   
 
-  return <div>{console.log(parsed)}</div>;
-};
+  return <div>Hola</div>;
+}
 export default List;

@@ -1,56 +1,37 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Movie } from "../interfaces";
 import { Link } from "react-router-dom";
 import HeartFilled from "./icons/heart-filled";
-
-// import  {useLocalStorage}  from "../storage/storage";
-
+import { useLocalStorage } from "../storage/storage";
 interface Props {
   data: Movie;
 }
 
 export const Card = ({ data }: Props) => {
   const image = "https://image.tmdb.org/t/p/w500";
-
-  // let value : string
-  // const [value,setValue] = useState<Array<Movie>>([])
-  const [color, setColor] = useState(true);
-
-  // const deleteFav = () =>{
-  //   const newFav = [...value];
-  //   const favIndex = newFav.findIndex(
-  //     (fav) => fav.text === data.id
-  //   );
-  //   newFav.splice(favIndex, 1);
-  //   setValue(newFav);
-  // };
+  const item = false
+  const { setItem, getItem, removeItem, validate } = useLocalStorage("fav");
   
-  const handleClick = () => {
-    setColor(!color);
-    const fav = JSON.stringify(data);
-    if (color == true) {
-      
-      const newFav = [];
-      newFav.push(fav)
-      // const favs = newFav
-      // .map(( favIndex, arr) =>{
 
-      // } )
-      console.log(newFav);
-      localStorage.setItem("fav", JSON.stringify(newFav));
-    } else {
-      // const getItem = localStorage.getItem("fav");
-      // const parsed = JSON.parse(getItem)
-      // console.log(setValue(parsed))
-      
-      localStorage.removeItem("fav");
+  const handleClick = (movie: Movie) => {
+    const newMovie = {
+      id: movie.id,
+      name: movie.name,
+      title: movie.title,
+      patch: movie.poster_path,
     }
+
+    validate(newMovie.id)
+    
+    setItem(newMovie)
+    
   };
 
   
+  
   return (
-    <div>
-      <Link key={data.id} to="/details" state={{ data: data }}>
+    <div  key={data.id}>
+      <Link to="/details" state={{ data: data }}>
         <div className="max-w-sm rounded overflow-hidden shadow-lg mt-2 ml-2 text-white">
           <img
             src={`${image}${data?.poster_path}`}
@@ -61,13 +42,16 @@ export const Card = ({ data }: Props) => {
         </div>
       </Link>
       <div>
-        <button key={data.id} onClick={handleClick}>
-          <HeartFilled color={color} />
-        </button>
+        {
+          !item ? (<button onClick={() => {handleClick(data), getItem("fav")}}>
+          <HeartFilled color={true} />
+        </button>) : (<button onClick={() => {handleClick(data), removeItem()}}>
+          <HeartFilled color={false} />
+        </button>)
+        }
+        
       </div>
-      <div>
-
-      </div>
+      <div></div>
     </div>
   );
 };

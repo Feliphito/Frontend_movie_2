@@ -62,3 +62,10 @@ export interface SpokenLenguages {
   iso_639_1: string | undefined;
   name: string | undefined;
 }
+
+export interface ListFav {
+  id?: number;
+  poster_path: string | undefined;
+  title: string | undefined;
+  name: string | undefined;
+}

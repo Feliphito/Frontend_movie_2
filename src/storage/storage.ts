@@ -1,34 +1,40 @@
-import { useState, useEffect } from "react";
-import { Movie } from "../interfaces";
+import { ListFav } from "../interfaces";
 
-interface LocalProps {
-    key: string;
-    initialValue: Movie[];
-}
-
-
-export const useLocalStorage = ({key, initialValue}: LocalProps) => {
-  const [value, setValue] = useState<LocalProps>(() => {
-    
-    if(!initialValue)
+export const useLocalStorage = (key: string) => {
+  const setItem = (value: unknown) => {
     try {
-      const value =localStorage.getItem(key);
-      return value ? JSON.parse(value): initialValue;
-      
+      window.localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      return initialValue;
+      console.error(error);
     }
-  });
+  };
+  
+  const getItem = (key: string) => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : undefined;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  useEffect(() => {
-    if(value){
-      try{
-        localStorage.setItem(key, JSON.stringify(value));
-      } catch (error){
-        console.log(error)
-      }
-  }}, [value, key]);
+  const removeItem = () => {
+    try {
+      window.localStorage.removeItem(key);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  return [value, setValue];
+  const validate = (id?: number) => {
+    try {
+      const item = JSON.parse(localStorage.getItem(key) || "[]") as ListFav[];
+
+      return item.some((item) => item.id === id) ? true : false;
+    } catch {
+      console.error("no existe");
+    }
+  };
+
+  return { setItem, getItem, removeItem, validate };
 };
-
