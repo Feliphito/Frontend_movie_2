@@ -4,7 +4,6 @@ import Welcome from "./Welcome";
 import { useEffect, useState } from "react";
 import { Movie } from "../interfaces";
 
-// import { getMovies } from "../api";
 
 
 

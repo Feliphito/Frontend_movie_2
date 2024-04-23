@@ -1,8 +1,6 @@
 import { useState } from "react";
-// import { Link } from "react-router-dom";
 import { Card } from "../components/Card";
 import { Movie } from "../interfaces";
-// import { love } from "../images/love.png";
 
 interface Props {
   movies: Movie[];
