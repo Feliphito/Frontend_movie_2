@@ -10,7 +10,7 @@ interface Props {
 export const Card = ({ data }: Props) => {
   const image = "https://image.tmdb.org/t/p/w500";
   const [itemValue,setItemValue] = useState(false)
-  const { setItem, getItem, removeItem, validate } = useLocalStorage("fav");
+  const { setItem, removeItem, validate } = useLocalStorage("fav");
   
 
   const handleClick = (movie: Movie) => {
@@ -43,14 +43,12 @@ export const Card = ({ data }: Props) => {
       </Link>
       <div>
         {
-          !itemValue ? (<button onClick={() => {handleClick(data), getItem("fav"), setItemValue(true)}}>
+          !itemValue ? (<button onClick={() => {handleClick(data), setItemValue(true)}}>
           <HeartFilled color={true} />
         </button>) : (<button onClick={() => {handleClick(data), removeItem(), setItemValue(false)}}>
           <HeartFilled color={false} />
         </button>)
         }
-        
-        <Link to="/list" state={{ data: data }} ><div>o</div></Link>
       </div>
     </div>
   );

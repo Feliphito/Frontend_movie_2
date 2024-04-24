@@ -1,22 +1,24 @@
 
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
+import { useLocalStorage } from "../storage/storage";
 
 export default function List() {
   const image = "https://image.tmdb.org/t/p/w500";
-  const location = useLocation();
+  // const location = useLocation();
+  const { getItem } = useLocalStorage("fav")
+  
+  const item = getItem("fav")
   
 
- 
-
   return (
-    <div>
-      <div className="max-w-sm rounded overflow-hidden shadow-lg mt-2 ml-2 text-white">
+    <div className="bg-black h-screen flex-auto">
+      <div className="bg-black max-w-sm rounded overflow-hidden shadow-lg mt-2 ml-2 text-white">
         <img
-          src={`${image}${location?.state?.data?.poster_path}`}
-          alt={location?.state?.data?.title ?? location?.state?.data?.name}
+          src={`${image}${item.patch}`}
+          alt={item.title ?? item.name}
         />
-        <p>{location?.state?.data?.title ?? location?.state?.data?.name}</p>
-        <p>{location?.state?.data?.adult}</p>
+        <p>{item.title ?? item.name}</p>
+        
       </div>
 
       <div></div>
