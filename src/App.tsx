@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Signin from "./pages/Signin";
 import MovieDetails from "./pages/MovieDetails";
-import List from "./pages/List";
+import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/" element={<Main />} />
         <Route path="/details" element={<MovieDetails />} />
-        <Route path="/list" element={<List/>} />
+        <Route path="/list" element={<Favorites/>} />
         <Route path="/profile" element={<Profile/>} />
       </Routes>
     </div>

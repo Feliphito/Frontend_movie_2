@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Movie } from "../interfaces";
 import { Link } from "react-router-dom";
 import HeartFilled from "./icons/heart-filled";
@@ -9,28 +8,25 @@ interface Props {
 
 export const Card = ({ data }: Props) => {
   const image = "https://image.tmdb.org/t/p/w500";
-  const [itemValue,setItemValue] = useState(false)
-  const { setItem, removeItem, validate } = useLocalStorage("fav");
-  
+
+  const { saveItem, removeItem, validate } = useLocalStorage();
 
   const handleClick = (movie: Movie) => {
     const newMovie = {
       id: movie.id,
       name: movie.name,
       title: movie.title,
-      patch: movie.poster_path,
+      poster_path: movie.poster_path,
+    };
+    try {
+      saveItem(newMovie);
+    } catch (error) {
+      console.error(error);
     }
-
-    validate(newMovie.id)
-    
-    setItem(newMovie)
-    
   };
 
-  
-  
   return (
-    <div  key={data.id}>
+    <div key={data.id}>
       <Link to="/details" state={{ data: data }}>
         <div className="max-w-sm rounded overflow-hidden shadow-lg mt-2 ml-2 text-white">
           <img
@@ -38,17 +34,26 @@ export const Card = ({ data }: Props) => {
             alt={data?.title ?? data?.name}
           />
           <p>{data?.title ?? data?.name}</p>
-          <p>{data?.adult}</p>
         </div>
       </Link>
       <div>
-        {
-          !itemValue ? (<button onClick={() => {handleClick(data), setItemValue(true)}}>
-          <HeartFilled color={true} />
-        </button>) : (<button onClick={() => {handleClick(data), removeItem(), setItemValue(false)}}>
-          <HeartFilled color={false} />
-        </button>)
-        }
+        {!validate(data.id) ? (
+          <button
+            onClick={() => {
+              handleClick(data);
+            }}
+          >
+            <HeartFilled color={true} />
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+               removeItem(data.id);
+            }}
+          >
+            <HeartFilled color={false} />
+          </button>
+        )}
       </div>
     </div>
   );
