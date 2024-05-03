@@ -25,7 +25,11 @@ const Main = () => {
             }?&page=${page}&${apiKey}`
       )
         .then((res) => res.json())
-        .then((json) => setMovies(json.results));
+        .then((json) => {
+          const result = json.results as Movie[];
+          const joined = movies.concat(result);
+          setMovies(joined);
+        });
       setLoading(false);
       setPage(page + 1);
     } catch (err) {
@@ -72,7 +76,13 @@ const Main = () => {
             {/*
           Es la peli/serie de bienvenida se le pasan las props de movies para cargarlas 
           */}
-            <Welcome movies={movies.at(0)} />
+            {movies.length > 0 ? (
+              <Welcome movies={movies.at(0)} />
+            ) : (
+              <div>
+                <p>Loading...</p>
+              </div>
+            )}
           </div>
         )}
       </div>
