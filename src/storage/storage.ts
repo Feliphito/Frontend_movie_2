@@ -41,8 +41,8 @@ export const useLocalStorage = () => {
     }
     try {
       const items = getItems();
-      const newItem = items?.filter(item => item.id  !== id);
-      console.log(newItem)
+      const newItem = items?.filter((item) => item.id !== id);
+      console.log(newItem);
       window.localStorage.setItem(key, JSON.stringify(newItem));
       // window.localStorage.removeItem(key);
     } catch (error) {
